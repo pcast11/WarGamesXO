@@ -1,5 +1,8 @@
 //Minimax Algorithm used was made by Ahmad Abdolsaheb and found at: https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37 and adapted to fit my game
 
+
+//Global Variables
+
 var screen = 1;
 var gameType = 3;
 var p1 = "X";
@@ -14,14 +17,19 @@ var zeroCount = 0;
 var i = 0;
 document.getElementById("textIn").autofocus = true;
 var origBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+// Starts the game when HTML document is ready
 $(document).ready(startGame());
 
+//Prepares game for user input
 function startGame() {
-	document.getElementById("textIn").focus();
+	document.getElementById("textIn").focus(); //Sets text focus to textbox
 	$("button").prop("disabled", true);
 	checkInput();
 }
 
+
+// Checks user's move and responds accordingly
 function checkInput() {
 	$("#textIn").keypress(function(e) {
 		if (e.which == 13) {
@@ -113,12 +121,16 @@ function checkInput() {
 	});
 }
 
+
+// Asks if 1-player wants to be x or o
 function playOne() {
 	$("button").html("&nbsp");
 	$("p").html("X or O?");
 	screen = 2;
 }
 
+
+// Prepares game for one-player game
 function playOne2() {
 	moveCount++;
 	if (player1) {
@@ -143,10 +155,14 @@ function playOne2() {
 	}
 }
 
+
+// Gets empty spaces
 function emptyIndices(board) {
 	return board.filter(s => s != "O" && s != "X");
 }
 
+
+// Checks for winning moves
 function winning(board, player) {
 	if (
 		(board[0] == player && board[1] == player && board[2] == player) ||
@@ -164,6 +180,8 @@ function winning(board, player) {
 	}
 }
 
+
+// Minimax algorithm
 function minimax(newBoard, player) {
 	//available spots
 	var availSpots = emptyIndices(newBoard);
@@ -231,12 +249,15 @@ function minimax(newBoard, player) {
 	return moves[bestMove];
 }
 
+
+// Asks player one if they want to be x or o
 function playTwo() {
 	$("button").html("&nbsp");
 	$("#mainText").html("Player one, X or O?");
 	checkInput();
 }
 
+// Prepares board for two-player game
 function playTwo2() {
 	if (player1 == true) {
 		$("#mainText").html("Ready Player One");
@@ -247,6 +268,8 @@ function playTwo2() {
 	}
 }
 
+
+// Plays zero-player game
 function playZero() {
 	$("#mainText").html("");
 	origBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
@@ -255,6 +278,8 @@ function playZero() {
 	loopIterationsX(1000);
 }
 
+
+// Loop for X moves
 function loopIterationsX(timeX) {
 		setTimeout(function() {
 			playX();
@@ -276,6 +301,8 @@ function loopIterationsX(timeX) {
 		}, timeX)
 	}
 
+
+// Loop for O moves
 function loopIterationsO(timeO) {
 		setTimeout(function() {
 			playO();
@@ -297,6 +324,8 @@ function loopIterationsO(timeO) {
 		}, timeO)
 	}
 
+
+// X move
 function playX() {
 	var aiMoveIndex;
 	if(moveCount == 0) {
@@ -313,6 +342,8 @@ function playX() {
 	origBoard[aiMoveIndex] = "X";
 }
 
+
+// O move
 function playO() {
 	var aiMoveIndex;
 	if(moveCount == 0) {
@@ -329,6 +360,8 @@ function playO() {
 	origBoard[aiMoveIndex] = "O";
 }
 
+
+// WarGames easter egg ending
 function warGame() {
 	document.getElementById("gameTable").style.display = "none";
 	document.getElementById("endGame").style.display = "block";
@@ -337,6 +370,8 @@ function warGame() {
 	);
 }
 
+
+// User input
 function humanTurn(playLet) {
 	$("button").off().on("click", function() {
 		$(this).html(playLet);
@@ -359,6 +394,8 @@ function humanTurn(playLet) {
 	});
 }
 
+
+// Checks for win
 function checkForWin(buttonId) {
 	if (moveCount == 9) {
 		drawCase();
@@ -452,6 +489,8 @@ function checkForWin(buttonId) {
 	}
 }
 
+
+// Output for win scenario
 function winCase() {
 	$("button").prop("disabled", true);
 	var playerWin = "";
@@ -469,6 +508,7 @@ function winCase() {
 	document.getElementById("textIn").focus();
 }
 
+// Output for draw scenario
 function drawCase() {
 	$("button").prop("disabled", true);
 	win = true;
